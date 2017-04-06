@@ -20,9 +20,30 @@ if ~(find(v==1)== find(enemy==10))
     if (points/10==floor(points/10))
     v=v+enemy;
     end
+    if (points/10==floor(points/10))
+        clf;
+    [Ea,Eb]=find(v==10);
+    N_enemy=size(Ea,1);
+    [a,b]=find(v==1);
+    axis([0 110 0 110])
+    grid on
+    rectangle('Position',[0,100,100,10],'FaceColor','w','EdgeColor','w')
+    rectangle('Position',[100,0,10,110],'FaceColor','w','EdgeColor','w')                
+    text(5,105,sprintf('Current Points: %d      JUMP Left : %d',points,jump),'Color','r','FontSize',10) 
+                    
+    line([0,100,100],[100,100,0],'color','k')
+    for i=1:N_enemy
+        rectangle('Position',([((Ea(i)-1)*10)+2,((Eb(i)-1)*10)+2,6,6]));
+    end
+    rectangle('Position',[((a-1)*10)+2,((b-1)*10)+2,6,6],'Curvature',[1,1])
+   
+    end
+    
+    
+    
     fprintf('Current points: %d\nJUMP left : %d',points,jump)
     u=v;
-    move= menu ('Movement','up','down','left','right','jump')
+    move= menu ('Movement','up','down','left','right','jump');
     [a,b]=find(v==1);
     if move==1 && b+1<=10
     v(a,b+1)=v(a,b+1)+v(a,b);
@@ -80,10 +101,8 @@ for i=1:N_enemy
 end
 end
 points=points+1;
-v
-u
 if (isempty(find(v==11)))
-display_game(v,u);
+display_game(v,u,points,jump); 
 end
 
 if (~isempty(find(v==11)))
